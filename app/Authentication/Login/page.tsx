@@ -7,7 +7,7 @@ const LoginPage = () => {
       <div className="back-btn">←</div>
 
       <div className="logo">
-      <img src="/tracker-logo.png" alt="Attendance Tracker Logo" />
+      <img src="/Images/tracker.png" alt="Attendance Tracker Logo" />
       </div>
 
       <form>
@@ -30,10 +30,10 @@ const LoginPage = () => {
       <div className="divider">Or continue with</div>
 
       <div className="social-login">
-        <img src="/Google-Symbol.png" alt="Google" />
-        <img src="/apple-logo.png" alt="Apple" />
-        <img src="/facebook-color.png" alt="Facebook" />
-        <img src="/twitter-logo.png" alt="Twitter" />
+        <img src="/Images/google.png" alt="Google" />
+        <img src="/Images/apple.png" alt="Apple" />
+        <img src="/Images/facebook.png" alt="Facebook" />
+        <img src="/Images/twitter.png" alt="Twitter" />
       </div>
     </div>
   );
