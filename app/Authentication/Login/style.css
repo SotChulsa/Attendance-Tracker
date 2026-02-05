@@ -44,6 +44,11 @@ background-color: white
   margin-bottom: 24px;
 }
 
+.login-container .logo img {
+  width: 70px;
+  height: 70px;
+}
+
 .login-container label {
   display: block;
   margin-bottom: 6px;
@@ -111,15 +116,25 @@ background-color: white
   background: #000;
 }
 
+.social-login img {
+  width: 50px; 
+  height: 50px;
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 5px;
+}
+
 .social-login {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px; 
+  justify-content: center;
+  align-items: center;
 }
 
 .social-login button {
   flex: 1;
-  height: 44px;
+  height: 20px;
   border-radius: 10px;
   border: 2px solid #000;
   background: #fff;
@@ -127,4 +142,5 @@ background-color: white
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 2px;
 }
