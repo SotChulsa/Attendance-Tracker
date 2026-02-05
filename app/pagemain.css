@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   background: 
-    linear-gradient(rgba(238, 190, 255, 0.7), rgba(238, 190, 255, 0.7)), /* Adjust opacity here */
+    linear-gradient(rgba(238, 190, 255, 0.7), rgba(238, 190, 255, 0.7)),
     url("https://static.wixstatic.com/media/f81f50_4d00b555308f4681891e45259771237d~mv2.png/v1/fill/w_283,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f81f50_4d00b555308f4681891e45259771237d~mv2.png");
   background-repeat: no-repeat;
   background-position: center;
