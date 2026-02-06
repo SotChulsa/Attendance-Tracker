@@ -16,7 +16,8 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
 const buttonStyle: React.CSSProperties = {
   backgroundColor: "#ffffff",
   color: "black",
-  width: "150px",
+  width: "200px",
+  height: "50px",
   padding: "10px 20px",
   border: "black solid 2px",
   borderRadius: "10px",
