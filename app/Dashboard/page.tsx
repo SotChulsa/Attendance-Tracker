@@ -14,6 +14,7 @@ const DashboardPage = () => {
           <span>Settings</span>
         </nav>
         <div className="profile" />
+        <img src="https://img.icons8.com/?size=100&id=77883&format=png&color=000000" alt="Profile"/>
       </header>
 
       <div className="content">
@@ -55,6 +56,18 @@ const DashboardPage = () => {
             <div className="bar tall" />
             <div className="bar short" />
             <div className="bar tallest" />
+            <div className="bar medium" />
+            <div className="bar tall"/>
+            <div className="bar short" />
+            <div className="bar tallest" />
+            <div className="bar medium" />
+            <div className="bar short" />
+            <div className="bar medium" />
+            <div className="bar tall"/>
+            <div className="bar tallest" />
+            <div className="bar short" />
+            <div className="bar medium" />
+            <div className="bar tall"/>
             <div className="bar medium" />
           </div>
         </main>
