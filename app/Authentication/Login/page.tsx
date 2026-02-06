@@ -29,7 +29,6 @@ const LoginPage = () => {
 
       <div className="divider">Or continue with</div>
 
-      {/* Logo for Logins */}
       <div className="social-login">
         <img src="https://logos-world.net/wp-content/uploads/2020/09/Google-Symbol.png" alt="Google" />
         <img src="https://th.bing.com/th/id/R.fe099dad9c1908c2520be9c7c752f7ee?rik=%2b0riBowoEIIxeQ&pid=ImgRaw&r=0" alt="Apple" />

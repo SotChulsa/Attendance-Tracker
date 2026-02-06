@@ -63,7 +63,6 @@ export default function UserManagementPage() {
               onClick={handleSearchById}
             />
           </div>
-          
           <div className="search-option-btn">
             <span className="btn-icon"></span>
             <ButtonComponent 
@@ -81,7 +80,6 @@ export default function UserManagementPage() {
           </div>
         </div>
       </section>
-
       <section className="search-input-section">
         <div className="search-container">
           <input placeholder="🔎︎"
@@ -90,7 +88,6 @@ export default function UserManagementPage() {
           />
         </div>
         </section>
-
       <section className="users-table-section">
         <div className="table-header">
         </div>

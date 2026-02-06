@@ -24,7 +24,8 @@ const DashboardPage = () => {
           </div>
           <div className="class-today">
             <h4>Class Today</h4>
-            <div className="class-card">Java Programming<br />(2:40 - 4:10)</div>
+            <div className="class-card">
+              Java Programming<br />(2:40 - 4:10)</div>
             <div className="class-card">
               Cryptography & Network Security<br />(8:30 - 10:00)
             </div>
@@ -69,6 +70,8 @@ const DashboardPage = () => {
             <div className="bar medium" />
             <div className="bar tall"/>
             <div className="bar medium" />
+            <div className="bar tallest" />
+            <div className="bar tall"/>
           </div>
         </main>
       </div>
