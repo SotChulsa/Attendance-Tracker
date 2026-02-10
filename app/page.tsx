@@ -10,7 +10,7 @@ export default function HomePage() {
             <img src="https://icons.veryicon.com/png/o/education-technology/smart-campus-2/class-attendance.png" alt="Logo" />
             
             <div className="nav-links">
-              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/" className="nav-link">HomeHome</Link>
               <Link href="/about" className="nav-link">About</Link>
               <Link href="/contact" className="nav-link">Contact</Link>
             </div>
