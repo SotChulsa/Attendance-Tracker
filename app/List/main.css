@@ -1,0 +1,173 @@
+.user-management-container {
+  min-height: 100vh;
+  background-color: #f1ccff;
+  padding: 30px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.user-header {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  margin-left: 860px;
+}
+
+.welcome-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.welcome-section h1 {
+  font-size: 2.2rem;
+  color: #000000;
+  margin: 0;
+  font-weight: 600;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.search-section h3 {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.search-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 80px;
+  width: 30px;
+  margin-left: 400px;
+}
+
+.search-option-btn > button {
+  display: none;
+}
+
+.search-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  justify-content: flex-start; 
+}
+
+.search-input {
+  flex: 1;
+  padding: 14px 20px;
+  border: 2px solid black;
+  border-radius: 8px;
+  font-size: 20px;
+  max-width: 400px;
+  background-color: #C4C4C4;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: black;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.search-option-btn {
+  padding: 14px 70px;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  width: 40px;
+  color: white;
+}
+
+.search-option-btn .btn-icon {
+  width: 80px;
+}
+
+.search-container input {
+  color: #000000;
+}
+
+.users-table-section {
+  border-radius: 24px;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.table-header h2 {
+  font-size: 20px;
+  color: #BB00FF;
+  margin: 0;
+  font-weight: 600;
+}
+
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.users-table thead {
+  background-color: #BB00FF;
+  border-bottom: 2px solid #000000;
+}
+
+.users-table th {
+  padding: 16px 20px;
+  text-align: left;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  font-size: 20px;
+  border-right: 1px solid #000000;
+}
+
+.users-table tbody tr {
+  border: 2px solid black;
+}
+
+.users-table td {
+  padding: 16px 20px;
+  color: #000000;
+  font-size: 18px;
+}
+
+.role-badge {
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.search-container button {
+  width: auto !important;
+  margin: 0 !important;
+}

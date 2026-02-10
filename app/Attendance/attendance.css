@@ -1,0 +1,55 @@
+.attendance-page {
+  min-height: 100vh;
+  background-color: #F4D5FF;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 20px;
+  color: black
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 2fr 2fr 500px;
+  gap: 12px; 
+  align-items: center;
+}
+
+.calendar-image img {
+  border-radius: 16px;
+  padding: 12px;
+  padding-left: 164px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #BB00FF;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: black
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #ffffff;
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: black
+}
