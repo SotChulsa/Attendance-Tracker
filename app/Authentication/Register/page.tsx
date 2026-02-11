@@ -88,7 +88,7 @@ const RegisterPage = () => {
         });
         
         setTimeout(() => {
-          window.location.href = "/login";
+          window.location.href = "/Dashboard";
         }, 2000);
       } else {
         setMessage(`${data.error || "Registration failed"}`);

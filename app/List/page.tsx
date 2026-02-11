@@ -33,7 +33,7 @@ export default function UserManagementPage() {
 
 
   const handleSearchByRole = () => {
-    setSearchValue("student");
+    setSearchValue("");
   };
 
   const handleSearchById = () => {
