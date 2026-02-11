@@ -39,15 +39,15 @@ const isValidPassword = await compare(password, user.password);
 
     const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
     const token = await new SignJWT({
-      id: users.id,
-      email: users.email,
-      role: users.role,
+      id: user.id,
+      email: user.email,
+      role: user.role,
     })
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime('24h')
       .sign(secret);
 
-    const { password: _, ...userWithoutPassword } = users;
+    const { password: _, ...userWithoutPassword } = user;
 
     return Response.json({
       success: true,

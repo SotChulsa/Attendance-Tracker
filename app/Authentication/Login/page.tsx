@@ -27,58 +27,49 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.email || !formData.password) {
-      setMessage("Please enter email and password");
+  e.preventDefault();
+
+  if (!formData.email || !formData.password) {
+    setMessage("Please enter email and password");
+    setMessageType("error");
+    return;
+  }
+
+  setLoading(true);
+  setMessage("");
+
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setMessage("Login successful! Redirecting");
+      setMessageType("success");
+
+      setTimeout(() => {
+        window.location.href = "/Dashboard";
+      }, 1000);
+    } else {
+      setMessage(data.error || "Login failed");
       setMessageType("error");
-      return;
     }
-    
-    setLoading(true);
-    setMessage("");
-
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          remember: formData.remember
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setMessage("Login successful! Redirecting");
-        setMessageType("success");
-        
-        if (formData.remember) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
-        } else {
-          sessionStorage.setItem("token", data.token);
-          sessionStorage.setItem("user", JSON.stringify(data.user));
-        }
-        
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 1000);
-      } else {
-        setMessage(`${data.error || "Login failed"}`);
-        setMessageType("error");
-      }
-    } catch (error) {
-      setMessage("Network error. Please try again.");
-      setMessageType("error");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (error) {
+    setMessage("Network error. Please try again.");
+    setMessageType("error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="login-container">
