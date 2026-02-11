@@ -27,10 +27,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Hash password
     const hashedPassword = await hash(password, 10);
 
-    // Insert user
     const [newUser] = await db
       .insert(users)
       .values({

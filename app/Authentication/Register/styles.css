@@ -64,8 +64,10 @@ background-color: white
   margin-left: 70px;
 }
 
+.login-container input[type="email"],
+.login-container input[type="password"],
 .login-container input[type="text"],
-.login-container input[type="password"] {
+.login-container input[type="repassword"] {
   width: 100%;
   padding: 10px 12px;
   margin-bottom: 16px;

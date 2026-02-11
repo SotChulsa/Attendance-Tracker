@@ -54,7 +54,7 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (data.success) {
-        setMessage("Login successful! Redirecting...");
+        setMessage("Login successful! Redirecting");
         setMessageType("success");
         
         if (formData.remember) {
@@ -131,7 +131,7 @@ const LoginPage = () => {
         </div>
 
         <ButtonComponent 
-          label={loading ? "Logging in..." : "Continue"} 
+          label={loading ? "Logging in" : "Continue"} 
           type="submit"
           disabled={loading}
         />
@@ -147,7 +147,7 @@ const LoginPage = () => {
       </div>
 
       <p>
-        DDon't have an account? <a href="/register">Register</a>
+        Don't have an account? <a href="/register">Register</a>
       </p>
     </div>
   );
