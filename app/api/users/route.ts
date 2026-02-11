@@ -5,7 +5,6 @@ export async function GET() {
   try {
     const allUsers = await db.select().from(users);
 
-    // remove passwords
     const safeUsers = allUsers.map(({ password, ...rest }) => rest);
 
     return Response.json({ success: true, users: safeUsers });
