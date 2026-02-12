@@ -43,3 +43,12 @@ export async function testDbConnection() {
     return false;
   }
 }
+
+export const classes = pgTable("classes", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  subject: varchar("subject", { length: 255 }).notNull(),
+  schedule: varchar("schedule", { length: 255 }).notNull(),
+  teacherId: integer("teacher_id").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import "./style.css";
 import { ButtonComponent } from "@/Components/Buttons/button-component";
+import router from "next/router";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -42,8 +43,7 @@ const LoginPage = () => {
     const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json",},
       body: JSON.stringify({
         email: formData.email,
         password: formData.password,
@@ -51,6 +51,11 @@ const LoginPage = () => {
     });
 
     const data = await response.json();
+
+    if (data.success) {
+      localStorage.setItem("token", data.token);
+      sessionStorage.setItem("user", JSON.stringify(data.user));
+    }
 
     if (response.ok) {
       setMessage("Login successful! Redirecting");

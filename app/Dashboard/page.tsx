@@ -13,6 +13,7 @@ const DashboardPage = () => {
           <Link href="List">Teacher List</Link>
           <Link href="Attendance">Attendance</Link>
           <Link href="Settings">Settings</Link>
+          <Link href="Classes">Classes</Link>
         </nav>
         <div className="profile" />
         <img src="https://img.icons8.com/?size=100&id=77883&format=png&color=000000" alt="Profile"/>

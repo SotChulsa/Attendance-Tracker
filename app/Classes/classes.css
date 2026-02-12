@@ -1,0 +1,101 @@
+.classes-container {
+  min-height: 100vh;
+  padding: 40px;
+  background-color: #f4d5ff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.classes-container h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Message */
+.message {
+  margin-bottom: 15px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-weight: 500;
+  color: black;
+  border: 2px solid black;
+}
+
+/* Create Class Form */
+.create-class-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.create-class-form input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid #000000;
+  min-width: 180px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+  background-color: white;
+  color: black;
+}
+
+.create-class-form input:focus {
+  border-color: #b84dff;
+  box-shadow: 0 0 0 2px rgba(184, 77, 255, 0.15);
+}
+
+/* Table Container */
+.classes-table {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+  border: 2px solid black;
+}
+
+.classes-table p {
+    color: black;
+}
+
+/* Table */
+.classes-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.classes-table th {
+  text-align: left;
+  padding: 12px;
+  font-weight: 600;
+  border-bottom: 2px solid #eee;
+  color: #444;
+}
+
+.classes-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+.classes-table tr:hover {
+  background-color: #faf5ff;
+  transition: 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .create-class-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .create-class-form input {
+    width: 100%;
+  }
+}
