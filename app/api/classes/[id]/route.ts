@@ -4,9 +4,6 @@ import { classes } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { verifyToken } from "@/lib/auth";
 
-/* =========================
-   Helper: Get Payload
-========================= */
 function getPayload(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
 
@@ -18,9 +15,6 @@ function getPayload(request: NextRequest) {
   return verifyToken(token);
 }
 
-/* =========================
-   GET /api/classes/:id
-========================= */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -70,9 +64,6 @@ export async function GET(
   }
 }
 
-/* =========================
-   PUT /api/classes/:id
-========================= */
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -126,9 +117,6 @@ export async function PUT(
   }
 }
 
-/* =========================
-   DELETE /api/classes/:id
-========================= */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
