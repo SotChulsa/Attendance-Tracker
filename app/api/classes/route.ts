@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import { db } from "@/db/schema";
+import { db } from "@/lib/drizzle";
 import { classes } from "@/db/schema"; 
 
 async function verifyToken(request: NextRequest) {
@@ -53,14 +53,14 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    //Insert class (Ownership enforced here)
+    //Insert class
     const newClass = await db
       .insert(classes)
       .values({
         name,
         subject,
         schedule,
-        teacherId: payload.id, //don't trust client for this
+        teacherId: Number(payload.id), //don't trust client for this
       })
       .returning();
     return NextResponse.json(
@@ -84,3 +84,40 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+import { eq } from "drizzle-orm";
+
+export async function GET(request: NextRequest) {
+  try {
+    const payload: any = await verifyToken(request);
+
+    //only teachers can see the classes
+    if (payload.role !== "teacher") {
+      return NextResponse.json(
+        { success: false, message: "Forbidden" },
+        { status: 403 }
+      );
+    }
+
+    const teacherId = Number(payload.id);
+
+    const teacherClasses = await db
+      .select()
+      .from(classes)
+      .where(eq(classes.teacherId, teacherId));
+
+    return NextResponse.json({
+      success: true,
+      classes: teacherClasses,
+    });
+
+  } catch (error: any) {
+    console.error("Get Classes Error:", error.message);
+
+    return NextResponse.json(
+      { success: false, message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+}
+

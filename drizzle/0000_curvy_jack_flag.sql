@@ -3,7 +3,7 @@ CREATE TABLE "users" (
 	"name" varchar(255) NOT NULL,
 	"email" varchar(255) NOT NULL,
 	"role" varchar(50) NOT NULL,
-	"password" integer NOT NULL
-	CONSTRAINT "users_email_unique" UNIQUE("email")
+	"password" integer NOT NULL,
+	CONSTRAINT "users_email_unique" UNIQUE("email"),
 	CONSTRAINT "users_password" UNIQUE("password")
 );
