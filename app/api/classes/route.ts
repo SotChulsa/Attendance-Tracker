@@ -3,25 +3,26 @@ import { jwtVerify } from "jose";
 import { db } from "@/lib/drizzle";
 import { classes } from "@/db/schema"; 
 
-async function verifyToken(request: NextRequest) {
+export async function verifyToken(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
-  console.log("AUTH HEADER:", authHeader);
-  if (!authHeader?.startsWith("Bearer ")) {
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     throw new Error("Unauthorized");
   }
+
   const token = authHeader.split(" ")[1];
-  if (!token || token === "null") {
-    throw new Error("Unauthorized");
-  }
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
   const { payload } = await jwtVerify(token, secret);
+
   return payload;
 }
 
 
+
+
 export async function POST(request: NextRequest) {
   try {
-    const payload: any = await verifyToken(request);
+    const payload = await verifyToken(request);
     //Role check
     if (payload.role !== "teacher") {
       return NextResponse.json(

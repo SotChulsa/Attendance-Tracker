@@ -17,15 +17,18 @@ export default function ClassesPage() {
   const [subject, setSubject] = useState("");
   const [schedule, setSchedule] = useState("");
   const [message, setMessage] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchClasses();
   }, []);
 
-  //get the classes
+  //get the class
   const fetchClasses = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token") ||
+        sessionStorage.getItem("token");
 
       const res = await fetch("/api/classes", {
         headers: {
@@ -38,9 +41,9 @@ export default function ClassesPage() {
       if (data.success) {
         setClasses(data.classes);
       } else {
-        setMessage(data.error || "Failed to fetch classes");
+        setMessage("Failed to fetch classes");
       }
-    } catch (error) {
+    } catch {
       setMessage("Error loading classes");
     }
   };
@@ -52,38 +55,81 @@ export default function ClassesPage() {
       return;
     }
 
-    try {
-        const token =
-        localStorage.getItem("token") ||
-        sessionStorage.getItem("token");
-        console.log("TOKEN:", token);
-      const res = await fetch("/api/classes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name,
-          subject,
-          schedule,
-        }),
-      });
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
 
-      const data = await res.json();
+    const res = await fetch("/api/classes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, subject, schedule }),
+    });
 
-      if (data.success) {
-        setMessage("Class created successfully");
-        setName("");
-        setSubject("");
-        setSchedule("");
-        fetchClasses();
-      } else {
-        setMessage(data.error || "Failed to create class");
-      }
-    } catch (error) {
-      setMessage("Something went wrong");
+    const data = await res.json();
+
+    if (data.success) {
+      setMessage("Class created successfully");
+      setName("");
+      setSubject("");
+      setSchedule("");
+      fetchClasses();
     }
+  };
+
+  // edit the class
+  const handleEditClass = (cls: ClassType) => {
+    setEditingId(cls.id);
+    setName(cls.name);
+    setSubject(cls.subject);
+    setSchedule(cls.schedule);
+  };
+
+  //update the class
+  const handleUpdateClass = async () => {
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+    const res = await fetch(`/api/classes/${editingId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, subject, schedule }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      setMessage("Class updated successfully");
+      setEditingId(null);
+      setName("");
+      setSubject("");
+      setSchedule("");
+      fetchClasses();
+    }
+  };
+
+  //delete the class
+  const handleDeleteClass = async (id: string) => {
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+    if (!confirm("Delete this class?")) return;
+
+    await fetch(`/api/classes/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    fetchClasses();
   };
 
   return (
@@ -92,7 +138,6 @@ export default function ClassesPage() {
 
       {message && <p className="message">{message}</p>}
 
-    {/* Create classroom */}
       <div className="create-class-form">
         <input
           placeholder="Class Name"
@@ -110,10 +155,13 @@ export default function ClassesPage() {
           onChange={(e) => setSchedule(e.target.value)}
         />
 
-        <ButtonComponent label="Create Class" onClick={handleCreateClass} />
+        <ButtonComponent
+          label={editingId ? "Update Class" : "Create Class"}
+          onClick={editingId ? handleUpdateClass : handleCreateClass}
+        />
       </div>
 
-      {/* classes table */}
+      {/* CLASSES TABLE */}
       <div className="classes-table">
         {classes.length === 0 ? (
           <p>No classes found</p>
@@ -124,6 +172,7 @@ export default function ClassesPage() {
                 <th>Name</th>
                 <th>Subject</th>
                 <th>Schedule</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -132,6 +181,16 @@ export default function ClassesPage() {
                   <td>{cls.name}</td>
                   <td>{cls.subject}</td>
                   <td>{cls.schedule}</td>
+                  <td>
+                    <ButtonComponent
+                      label="Edit"
+                      onClick={() => handleEditClass(cls)}
+                    />
+                    <ButtonComponent
+                      label="Delete"
+                      onClick={() => handleDeleteClass(cls.id)}
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>

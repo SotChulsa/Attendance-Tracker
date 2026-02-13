@@ -70,11 +70,15 @@
 }
 
 .classes-table th {
-  text-align: left;
+  text-align: center;
   padding: 12px;
   font-weight: 600;
   border-bottom: 2px solid #000000;
   color: #000000;
+}
+
+.classes-table tbody {
+  text-align: center;
 }
 
 .classes-table td {
@@ -82,21 +86,10 @@
   border-bottom: 1px solid #000000;
   font-size: 14px;
   color: black;
+  gap: 4px;
 }
 
 .classes-table tr:hover {
   background-color: #faf5ff;
   transition: 0.2s ease;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .create-class-form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .create-class-form input {
-    width: 100%;
-  }
 }
