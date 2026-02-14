@@ -106,7 +106,30 @@ const AttendancePage = () => {
 };
 
 export default AttendancePage;
-function fetchAttendance() {
+const fetchAttendance = async () => {
+  try {
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+    const res = await fetch("/api/attendance", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      setRecords(data.attendance);
+    }
+  } catch (error) {
+    console.error("Failed to fetch attendance");
+  }
+};
+
+
+function setRecords(attendance: any) {
   throw new Error("Function not implemented.");
 }
 
