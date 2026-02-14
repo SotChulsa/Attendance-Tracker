@@ -31,8 +31,8 @@ export async function POST(request: NextRequest) {
       );
     }
     //Get request body
-    const body = await request.json();
-    const { name, subject, schedule } = body;
+    const { name, subject, schedule, latitude, longitude } =
+    await request.json();
     //Validate input
     if (!name || name.length < 3) {
       return NextResponse.json(

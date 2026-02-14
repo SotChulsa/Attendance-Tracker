@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as dotenv from 'dotenv';
-import { pgTable, serial, varchar, integer, timestamp, text} from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, integer, timestamp, text, real} from 'drizzle-orm/pg-core';
 
 dotenv.config();
 
@@ -49,7 +49,23 @@ export const classes = pgTable("classes", {
   name: text("name").notNull(),
   subject: text("subject").notNull(),
   schedule: text("schedule").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  radius: integer("radius").default(50),
   teacherId: integer("teacher_id").references(() => users.id).notNull(),
   createdAt: timestamp("created_at").defaultNow()   
 });
+
+export const attendance = pgTable("attendance", {
+  id: serial("id").primaryKey(),
+  studentId: integer("student_id")
+    .references(() => users.id)
+    .notNull(),
+  classId: integer("class_id")
+    .references(() => classes.id)
+    .notNull(),
+  status: text("status").notNull(), 
+  createdAt: timestamp("created_at").defaultNow()
+});
+
 

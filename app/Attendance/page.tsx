@@ -11,6 +11,30 @@ type AttendanceRecord = {
   date: string;
 };
 
+const handleCheckIn = () => {
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+    await fetch("/api/check-in", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        classId: 1, //later comes from selected class
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      }),
+    });
+
+    fetchAttendance(); //refresh table
+  });
+};
+
+
 const AttendancePage = () => {
   const [records, setRecords] = useState<AttendanceRecord[]>([]);
 
@@ -47,6 +71,7 @@ const AttendancePage = () => {
       <div className="controls">
         <ButtonComponent label="Select Class" type="submit" />
         <ButtonComponent label="Select Date" type="submit" />
+      <ButtonComponent label="Check In" onClick={handleCheckIn}/>
         <div className="calendar-image">
           <img
             src="https://image2url.com/r2/default/images/1770264564282-8dfe96cd-d402-4aec-97b5-71cb52e11442.png"
@@ -81,3 +106,7 @@ const AttendancePage = () => {
 };
 
 export default AttendancePage;
+function fetchAttendance() {
+  throw new Error("Function not implemented.");
+}
+

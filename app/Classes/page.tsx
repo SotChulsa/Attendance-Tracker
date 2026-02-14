@@ -18,6 +18,8 @@ export default function ClassesPage() {
   const [schedule, setSchedule] = useState("");
   const [message, setMessage] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
 
   useEffect(() => {
     fetchClasses();
@@ -65,7 +67,13 @@ export default function ClassesPage() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ name, subject, schedule }),
+      body: JSON.stringify({
+      name,
+      subject,
+      schedule,
+      latitude,
+      longitude,
+    }),
     });
 
     const data = await res.json();
@@ -153,6 +161,18 @@ export default function ClassesPage() {
           placeholder="Schedule"
           value={schedule}
           onChange={(e) => setSchedule(e.target.value)}
+        />
+
+        <input
+          placeholder="Latitude"
+          value={latitude}
+          onChange={(e) => setLatitude(e.target.value)}
+        />
+
+        <input
+          placeholder="Longitude"
+          value={longitude}
+          onChange={(e) => setLongitude(e.target.value)}
         />
 
         <ButtonComponent
