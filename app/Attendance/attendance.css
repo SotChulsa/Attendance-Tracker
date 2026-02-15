@@ -32,6 +32,13 @@
   padding-left: 164px;
 }
 
+.controls select {
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 8px;
+  color: black;
+}
+
 .table-header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

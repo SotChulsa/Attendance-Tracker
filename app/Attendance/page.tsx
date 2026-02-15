@@ -11,48 +11,89 @@ type AttendanceRecord = {
   date: string;
 };
 
-const handleCheckIn = () => {
-  navigator.geolocation.getCurrentPosition(async (position) => {
-    const token =
-      localStorage.getItem("token") ||
-      sessionStorage.getItem("token");
-
-    await fetch("/api/check-in", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        classId: 1, //later comes from selected class
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      }),
-    });
-
-    fetchAttendance(); //refresh table
-  });
-};
-
-
 const AttendancePage = () => {
   const [records, setRecords] = useState<AttendanceRecord[]>([]);
+  const [classes, setClasses] = useState<any[]>([]);
+  const [selectedClass, setSelectedClass] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     fetchAttendance();
+    fetchClasses();
   }, []);
 
+  //get attendance
   const fetchAttendance = async () => {
     try {
-      const res = await fetch("/api/attendance");
+      const token =
+        localStorage.getItem("token") ||
+        sessionStorage.getItem("token");
+
+      const res = await fetch("/api/attendance", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       const data = await res.json();
 
       if (data.success) {
         setRecords(data.attendance);
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to fetch attendance");
     }
+  };
+
+  //get classes
+  const fetchClasses = async () => {
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+    const res = await fetch("/api/classes", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      setClasses(data.classes);
+    }
+  };
+
+  //check-in
+  const handleCheckIn = () => {
+    if (!selectedClass) {
+      setMessage("Please select a class");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const token =
+        localStorage.getItem("token") ||
+        sessionStorage.getItem("token");
+
+      const res = await fetch("/api/check-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          classId: Number(selectedClass),
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }),
+      });
+
+      const data = await res.json();
+      setMessage(data.message);
+
+      fetchAttendance();
+    });
   };
 
   return (
@@ -69,9 +110,18 @@ const AttendancePage = () => {
       </div>
 
       <div className="controls">
-        <ButtonComponent label="Select Class" type="submit" />
+        <select
+          value={selectedClass}
+          onChange={(e) => setSelectedClass(e.target.value)}>
+          <option value="">Select Class</option>
+          {classes.map((cls) => (
+            <option key={cls.id} value={cls.id}>
+              {cls.name}
+            </option>
+          ))}
+        </select>
+        <ButtonComponent label="Check In" onClick={handleCheckIn} />
         <ButtonComponent label="Select Date" type="submit" />
-      <ButtonComponent label="Check In" onClick={handleCheckIn}/>
         <div className="calendar-image">
           <img
             src="https://image2url.com/r2/default/images/1770264564282-8dfe96cd-d402-4aec-97b5-71cb52e11442.png"
@@ -79,7 +129,7 @@ const AttendancePage = () => {
           />
         </div>
       </div>
-
+      {message && <p className="message">{message}</p>}
       <div className="table-header">
         <span>Name</span>
         <span>Status</span>
@@ -106,30 +156,3 @@ const AttendancePage = () => {
 };
 
 export default AttendancePage;
-const fetchAttendance = async () => {
-  try {
-    const token =
-      localStorage.getItem("token") ||
-      sessionStorage.getItem("token");
-
-    const res = await fetch("/api/attendance", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      setRecords(data.attendance);
-    }
-  } catch (error) {
-    console.error("Failed to fetch attendance");
-  }
-};
-
-
-function setRecords(attendance: any) {
-  throw new Error("Function not implemented.");
-}
-

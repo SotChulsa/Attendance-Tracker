@@ -68,4 +68,16 @@ export const attendance = pgTable("attendance", {
   createdAt: timestamp("created_at").defaultNow()
 });
 
+export const classStudents = pgTable("class_students", {
+  id: serial("id").primaryKey(),
+  classId: integer("class_id")
+    .references(() => classes.id)
+    .notNull(),
+  studentId: integer("student_id")
+    .references(() => users.id)
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+
 

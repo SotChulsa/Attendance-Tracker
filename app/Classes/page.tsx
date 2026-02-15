@@ -25,6 +25,24 @@ export default function ClassesPage() {
     fetchClasses();
   }, []);
 
+  const handleGetLocation = () => {
+  if (!navigator.geolocation) {
+    setMessage("Geolocation not supported");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      setLatitude(position.coords.latitude.toString());
+      setLongitude(position.coords.longitude.toString());
+      setMessage("Location detected");
+    },
+    () => {
+      setMessage("Unable to get location");
+    }
+  );
+};
+
   //get the class
   const fetchClasses = async () => {
     try {
@@ -166,18 +184,23 @@ export default function ClassesPage() {
         <input
           placeholder="Latitude"
           value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
+          readOnly
         />
 
         <input
           placeholder="Longitude"
           value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
+          readOnly
         />
 
         <ButtonComponent
           label={editingId ? "Update Class" : "Create Class"}
           onClick={editingId ? handleUpdateClass : handleCreateClass}
+        />
+
+        <ButtonComponent
+          label="Use Current Location"
+          onClick={handleGetLocation}
         />
       </div>
 
