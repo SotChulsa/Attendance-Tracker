@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Class not found" }, { status: 404 });
     }
 
+    //calculate distance
     const distance = calculateDistance(
       latitude,
       longitude,
@@ -39,23 +40,36 @@ export async function POST(request: NextRequest) {
       cls.longitude
     );
 
-    if (distance > (cls.radius ?? 50)) {
+    const [classData] = await db
+      .select()
+      .from(classes)
+      .where(eq(classes.id, classId))
+      .limit(1);
+
+    if (!classData.radius) {
       return NextResponse.json(
-        { success: false, message: "Outside allowed area" },
-        { status: 403 }
+        { success: false, message: "Class radius not configured" },
+        { status: 400 }
       );
-    }
+}
+      let status = "Present";
+      let message = "Check-in successful";
 
-    await db.insert(attendance).values({
-      studentId: Number(payload.id),
-      classId,
-      status: "Present",
-    });
+      if (distance > classData.radius) {
+        status = "Outside Area";
+        message = "Outside allowed area";
+      }
 
-    return NextResponse.json({
-      success: true,
-      message: "Check-in successful",
-    });
+      await db.insert(attendance).values({
+        studentId: Number(payload.id),
+        classId,
+        status,
+      });
+
+      return NextResponse.json({
+        success: true,
+        message,
+      });
 
   } catch (error) {
     console.error(error);

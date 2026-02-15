@@ -20,6 +20,7 @@ export default function ClassesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [id, setID] = useState("");
 
   useEffect(() => {
     fetchClasses();
@@ -89,6 +90,7 @@ export default function ClassesPage() {
       name,
       subject,
       schedule,
+      id,
       latitude,
       longitude,
     }),
@@ -140,6 +142,27 @@ export default function ClassesPage() {
     }
   };
 
+    const handleAssignStudent = async (classId: string) => {
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+    await fetch("/api/classes/enroll", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        classId,
+        studentId: Number(id),
+      }),
+    });
+
+    setMessage("Student assigned");
+    setID("");
+    };
+
   //delete the class
   const handleDeleteClass = async (id: string) => {
     const token =
@@ -161,9 +184,7 @@ export default function ClassesPage() {
   return (
     <div className="classes-container">
       <h1>Your Classes</h1>
-
       {message && <p className="message">{message}</p>}
-
       <div className="create-class-form">
         <input
           placeholder="Class Name"
@@ -180,31 +201,30 @@ export default function ClassesPage() {
           value={schedule}
           onChange={(e) => setSchedule(e.target.value)}
         />
-
+        <input
+          placeholder="Student ID"
+          value={id}
+          onChange={(e) => setID(e.target.value)}
+        />
         <input
           placeholder="Latitude"
           value={latitude}
           readOnly
         />
-
         <input
           placeholder="Longitude"
           value={longitude}
           readOnly
         />
-
         <ButtonComponent
           label={editingId ? "Update Class" : "Create Class"}
           onClick={editingId ? handleUpdateClass : handleCreateClass}
         />
-
         <ButtonComponent
           label="Use Current Location"
           onClick={handleGetLocation}
         />
       </div>
-
-      {/* CLASSES TABLE */}
       <div className="classes-table">
         {classes.length === 0 ? (
           <p>No classes found</p>
@@ -232,6 +252,10 @@ export default function ClassesPage() {
                     <ButtonComponent
                       label="Delete"
                       onClick={() => handleDeleteClass(cls.id)}
+                    />
+                    <ButtonComponent
+                      label="Assign Student"
+                      onClick={() => handleAssignStudent(cls.id)}
                     />
                   </td>
                 </tr>

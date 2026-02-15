@@ -64,9 +64,10 @@ export const attendance = pgTable("attendance", {
   classId: integer("class_id")
     .references(() => classes.id)
     .notNull(),
-  status: text("status").notNull(), 
-  createdAt: timestamp("created_at").defaultNow()
+  status: text("status").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
+
 
 export const classStudents = pgTable("class_students", {
   id: serial("id").primaryKey(),
