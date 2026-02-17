@@ -16,6 +16,9 @@ const AttendancePage = () => {
   const [classes, setClasses] = useState<any[]>([]);
   const [selectedClass, setSelectedClass] = useState("");
   const [message, setMessage] = useState("");
+  const [nameFilter, setNameFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
 
   useEffect(() => {
     fetchAttendance();
@@ -29,12 +32,13 @@ const AttendancePage = () => {
         localStorage.getItem("token") ||
         sessionStorage.getItem("token");
 
-      const res = await fetch("/api/attendance", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const res = await fetch(`/api/attendance?name=${nameFilter}&status=${statusFilter}&date=${dateFilter}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await res.json();
 
       if (data.success) {
@@ -121,7 +125,20 @@ const AttendancePage = () => {
           ))}
         </select>
         <ButtonComponent label="Check In" onClick={handleCheckIn} />
-        <ButtonComponent label="Select Date" type="submit" />
+          <input
+            placeholder="Student Name"
+            onChange={(e) => setNameFilter(e.target.value)}
+            />
+          <select onChange={(e) => setStatusFilter(e.target.value)}>
+          <option value="">All Status</option>
+          <option value="Present">Present</option>
+          <option value="Outside Area">Outside Area</option>
+        </select>
+        <input
+          type="date"
+          value={dateFilter}
+          onChange={(e) => setDateFilter(e.target.value)}
+          />
         <div className="calendar-image">
           <img
             src="https://image2url.com/r2/default/images/1770264564282-8dfe96cd-d402-4aec-97b5-71cb52e11442.png"

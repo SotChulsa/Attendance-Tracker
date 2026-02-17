@@ -27,6 +27,12 @@
   align-items: center;
 }
 
+.controls input {
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+
 .calendar-image img {
   border-radius: 16px;
   padding: 12px;

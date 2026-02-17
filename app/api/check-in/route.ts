@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const payload: any = verifyToken(token);
 
     if (!payload || payload.role !== "student") {
-      return NextResponse.json({ message: "Students only" }, { status: 403 });
+      return NextResponse.json( { status: 403 });
     }
 
     const { classId, latitude, longitude } = await request.json();
