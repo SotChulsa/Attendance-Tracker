@@ -72,7 +72,7 @@ export default function ClassesPage() {
   //create the class
   const handleCreateClass = async () => {
     if (!name || !subject || !schedule) {
-      setMessage("All fields required");
+      setMessage("All fields is required");
       return;
     }
 
