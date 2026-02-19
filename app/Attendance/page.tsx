@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import "./attendance.css";
 import { ButtonComponent } from "@/Components/Buttons/button-component";
+import Link from "next/link";
 
 type AttendanceRecord = {
   id: string;
@@ -104,12 +105,21 @@ const AttendancePage = () => {
     <div className="attendance-page">
       <div className="header">
         <div className="user-info">
-          <div className="avatar" />
+          <div className="avatar"/>
           <img
             src="https://img.icons8.com/?size=100&id=77883&format=png&color=000000"
             alt="Profile"
           />
           <span>Welcome, Sot Chulsa</span>
+        </div>
+          <div className="top-row">
+            <nav className="nav-links">
+              <Link href="/Dashboard">Dashboard</Link>
+              <Link href="/List">List</Link>
+              <Link href="/Attendance">Attendance</Link>
+              <Link href="/Settings">Settings</Link>
+              <Link href="/Classes">Classes</Link>
+            </nav>
         </div>
       </div>
 

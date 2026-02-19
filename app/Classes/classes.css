@@ -12,6 +12,27 @@
   color: #222;
 }
 
+.top-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.classes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  font-size: 20px;
+  color: black;
+}
+
 /* Message */
 .message {
   margin-bottom: 15px;

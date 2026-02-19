@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ButtonComponent } from "@/Components/Buttons/button-component";
 import "./main.css";
+import Link from "next/link";
 
 type User = {
   id: string;
@@ -12,10 +13,21 @@ type User = {
 
 export default function UserManagementPage() {
   const [users, setUsers] = useState<User[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [searchValue, setSearchValue] = useState("");
+  const [searchType, setSearchType] = useState<
+    "all" | "role" | "id" | "name" | "class"
+  >("all");
 
   useEffect(() => {
     fetchUsers();
+      const storedUser =
+    localStorage.getItem("user") ||
+    sessionStorage.getItem("user");
+
+  if (storedUser) {
+    setCurrentUser(JSON.parse(storedUser));
+  }
   }, []);
 
   const fetchUsers = async () => {
@@ -31,79 +43,105 @@ export default function UserManagementPage() {
     }
   };
 
-
+  //search handlers for different criteria
   const handleSearchByRole = () => {
+    setSearchType("role");
     setSearchValue("");
   };
 
   const handleSearchById = () => {
-    console.log("Search by ID clicked");
-  };
-
-  const handleSearchByName = () => {
-    console.log("Search by Name clicked");
-  };
-
-  const handleSearchByClass = () => {
-    console.log("Search by Class clicked");
-  };
-
-  const handleSearch = () => {
-    console.log("Search clicked");
-  };
-
-  const handleClear = () => {
+    setSearchType("id");
     setSearchValue("");
   };
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-    user.role.toLowerCase().includes(searchValue.toLowerCase()) ||
-    user.id.toString().includes(searchValue)
-  );
+  const handleSearchByName = () => {
+    setSearchType("name");
+    setSearchValue("");
+  };
+
+  const handleSearchByClass = () => {
+    setSearchType("class");
+    setSearchValue("");
+  };
+
+  const handleClear = () => {
+    setSearchType("all");
+    setSearchValue("");
+  };
+
+  //dilter users based on search type and value
+  const filteredUsers = users.filter((user) => {
+    if (!searchValue) return true;
+
+    switch (searchType) {
+      case "role":
+        return user.role
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+
+      case "id":
+        return user.id.toString().includes(searchValue);
+
+      case "name":
+        return user.name
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+
+      case "class":
+        // Placeholder until class relation is implemented
+        return true;
+
+      default:
+        return (
+          user.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          user.role.toLowerCase().includes(searchValue.toLowerCase()) ||
+          user.id.toString().includes(searchValue)
+        );
+    }
+  });
 
   return (
     <div className="user-management-container">
       <header className="user-header">
-        <div className="welcome-section">
-          <h1>Welcome, Sot Chulsa</h1>
-          <div className="profile-avatar">
-            <img
-              src="https://img.icons8.com/?size=100&id=77883&format=png&color=000000"
-              alt="Profile"
-            />
+        <div className="top-row">
+          <nav className="nav-links">
+            <Link href="/Dashboard">Dashboard</Link>
+            <Link href="/List">List</Link>
+            <Link href="/Attendance">Attendance</Link>
+            <Link href="/Settings">Settings</Link>
+            <Link href="/Classes">Classes</Link>
+          </nav>
+          <div className="welcome-section">
+            <h1>Welcome, Bari Quixote</h1>
+            <div className="profile-avatar">
+              <img
+                src="https://img.icons8.com/?size=100&id=77883&format=png&color=000000"
+                alt="Profile"
+              />
+            </div>
           </div>
         </div>
       </header>
-
       <section className="search-buttons-section">
         <div className="search-buttons-grid">
           <div className="search-option-btn">
-            <ButtonComponent
-              label="Search by Role"
-              onClick={handleSearchByRole}
-            />
+            <ButtonComponent label="Search by Role" onClick={handleSearchByRole} />
           </div>
 
           <div className="search-option-btn">
-            <ButtonComponent
-              label="Search by ID"
-              onClick={handleSearchById}
-            />
+            <ButtonComponent label="Search by ID" onClick={handleSearchById} />
           </div>
 
           <div className="search-option-btn">
-            <ButtonComponent
-              label="Search by Name"
-              onClick={handleSearchByName}
-            />
+            <ButtonComponent label="Search by Name" onClick={handleSearchByName} />
           </div>
 
           <div className="search-option-btn">
-            <ButtonComponent
-              label="Search by Class"
-              onClick={handleSearchByClass}
-            />
+            <ButtonComponent label="Search by Class" onClick={handleSearchByClass} />
+          </div>
+
+          <div className="search-option-btn">
+            <ButtonComponent label="Clear" onClick={handleClear} />
           </div>
         </div>
       </section>
@@ -111,7 +149,7 @@ export default function UserManagementPage() {
       <section className="search-input-section">
         <div className="search-container">
           <input
-            placeholder="🔎︎"
+            placeholder={`Search by ${searchType}`}
             type="text"
             className="search-input"
             value={searchValue}

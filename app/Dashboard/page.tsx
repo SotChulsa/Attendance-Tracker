@@ -35,8 +35,7 @@ const DashboardPage = () => {
         <img src="https://icons.veryicon.com/png/o/education-technology/smart-campus-2/class-attendance.png" alt="Attendance Tracker Logo" />
         <nav className="nav-links">
           <span className="active">Dashboard</span>
-          <Link href="List">Student List</Link>
-          <Link href="List">Teacher List</Link>
+          <Link href="List">List</Link>
           <Link href="Attendance">Attendance</Link>
           <Link href="Settings">Settings</Link>
           <Link href="Classes">Classes</Link>

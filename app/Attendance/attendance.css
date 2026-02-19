@@ -20,6 +20,14 @@
   color: black
 }
 
+.top-row {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-left: 60px;
+  margin-top: 20px;
+}
+
 .controls {
   display: grid;
   grid-template-columns: 2fr 2fr 500px;

@@ -183,7 +183,16 @@ export default function ClassesPage() {
 
   return (
     <div className="classes-container">
+      <div className="classes-header">
       <h1>Your Classes</h1>
+          <nav className="nav-links">
+            <a href="/Dashboard">Dashboard</a>
+            <a href="/List">List</a>
+            <a href="/Attendance">Attendance</a>
+            <a href="/Settings">Settings</a>
+            <a href="/Classes">Classes</a>
+          </nav>
+      </div>
       {message && <p className="message">{message}</p>}
       <div className="create-class-form">
         <input
