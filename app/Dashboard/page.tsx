@@ -1,9 +1,35 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from 'next/link';
 import "./main.css";
 
+
 const DashboardPage = () => {
-  return (
+  const [stats, setStats] = useState<any>(null);
+
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
+
+  const fetchDashboard = async () => {
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+  const res = await fetch("/api/dashboard", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+    if (data.success) {
+      setStats(data);
+    }
+  };
+  return ( 
     <div className="dashboard-container">
       <header className="top-nav">
         <img src="https://icons.veryicon.com/png/o/education-technology/smart-campus-2/class-attendance.png" alt="Attendance Tracker Logo" />
@@ -36,25 +62,29 @@ const DashboardPage = () => {
 
         <main className="main-card">
           <h2>Class Attendance</h2>
-
-          <div className="stats">
-            <div>
-              <p>Total Student</p>
-              <strong>48</strong>
+          {stats && (
+            <div className="dashboard-cards">
+              <div className="card">
+                <h3>Total Students</h3>
+                <p>{stats.totalStudents}</p>
+              </div>
+              <div className="card">
+                <h3>Present Today</h3>
+                <p>{stats.totalPresent}</p>
+              </div>
+              <div className="card">
+                <h3>Absent Today</h3>
+                <p>{stats.totalAbsent}</p>
+              </div>
+              <div className="card">
+                <h3>Attendance %</h3>
+                <p>{stats.attendancePercentage}%</p>
+              </div>
             </div>
-            <div>
-              <p>Total Absent</p>
-              <strong>10</strong>
-            </div>
-            <div>
-              <p>Course</p>
-              <strong>Software Engineering</strong>
-            </div>
-          </div>
-
+          )} 
+        <div className="overview-section">
           <h4>Class Overview</h4>
-
-          <div className="chart">
+            <div className="chart">
             <div className="bar" />
             <div className="bar tall" />
             <div className="bar short" />
@@ -75,6 +105,7 @@ const DashboardPage = () => {
             <div className="bar tallest" />
             <div className="bar tall"/>
           </div>
+        </div>
         </main>
       </div>
     </div>
